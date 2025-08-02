@@ -4,14 +4,14 @@ import smtplib
 from email.mime.text import MIMEText
 from datetime import datetime
 
-# Gmail credentials
+# Set up SMS via email
 EMAIL_FROM = 'mcfay1999@gmail.com'
-EMAIL_TO = 'mcfay1999@gmail.com'
-EMAIL_PASS = 'Molly0704!'  # from Gmail app passwords
+EMAIL_TO = '9787667222@vtext.com'  # ← YOUR NUMBER'S SMS EMAIL
+EMAIL_PASS = 'Molly0704!'  # Gmail app password
 
-def send_email(subject, body):
+def send_sms(subject, body):
     msg = MIMEText(body)
-    msg["Subject"] = subject
+    msg["Subject"] = subject  # Most carriers will ignore this
     msg["From"] = EMAIL_FROM
     msg["To"] = EMAIL_TO
 
@@ -33,9 +33,10 @@ def check_filings():
         name = cells[0].get_text(strip=True)
         date = cells[2].get_text(strip=True)
         if today in date and ("Pelosi" in name or "Greene" in name):
-            alerts.append(f"{name} filed a report on {date}")
+            alerts.append(f"{name} filed on {date}")
 
     if alerts:
-        send_email("Congress Stock Alert", "\n".join(alerts))
+        send_sms("Congress Trade Alert", "\n".join(alerts))
 
 check_filings()
+
